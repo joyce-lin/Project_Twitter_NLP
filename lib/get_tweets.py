@@ -119,17 +119,15 @@ for tweet in iterator:
     retweet_count = tweet['retweet_count']
     created_at = tweet['created_at']
     
-        get_hashtags = lambda tweet: " ".join([i for i in tweet.split() if ('#' in i)])
-        hashtags1 = get_hashtags(tweet_content)
-        hashtags1 = re.sub('\W',' ',hashtags)
-        hashtags1 = re.sub('\s+',' ',hashtags)
-        if len(hashtags1) > 1:
-            try: 
-                hashtags = hashtags1
-            except:
-                hashtags = None
-
-    
+    get_hashtags = lambda tweet: " ".join([i for i in tweet.split() if ('#' in i)])
+    hashtags1 = get_hashtags(tweet_content)
+    hashtags1 = re.sub('\W',' ',hashtags)
+    hashtags1 = re.sub('\s+',' ',hashtags)
+    if len(hashtags1) > 1:
+        try: 
+            hashtags = hashtags1
+        except:
+            hashtags = None
     try:
         location =  cleaner(tweet['place']['full_name'])
     except:
