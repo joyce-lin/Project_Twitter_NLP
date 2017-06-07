@@ -121,8 +121,8 @@ for tweet in iterator:
     
     get_hashtags = lambda tweet: " ".join([i for i in tweet.split() if ('#' in i)])
     hashtags1 = get_hashtags(tweet_content)
-    hashtags1 = re.sub('\W',' ',hashtags)
-    hashtags1 = re.sub('\s+',' ',hashtags)
+    hashtags1 = re.sub('\W',' ',hashtags1)
+    hashtags1 = re.sub('\s+',' ',hashtags1)
     if len(hashtags1) > 1:
         try: 
             hashtags = hashtags1
