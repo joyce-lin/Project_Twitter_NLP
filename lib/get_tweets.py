@@ -9,7 +9,7 @@ import os,sys,inspect
 #parentdir = os.path.dirname(currentdir)
 #sys.path.insert(0,parentdir)
 
-from lib.twitter_keys import keys
+from twitter_keys import keys
 import json
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 
