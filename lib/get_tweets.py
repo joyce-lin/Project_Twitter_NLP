@@ -4,7 +4,7 @@ import pandas as pd
 import json
 from IPython.display import display
 import re
-#import os,sys,inspect
+import os,sys,inspect
 #currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 #parentdir = os.path.dirname(currentdir)
 #sys.path.insert(0,parentdir)
@@ -22,7 +22,7 @@ ACCESS_SECRET = keys['ACCESS_SECRET']
 ### -----------------------------------------------------------------------------------####
 ### geo bounding for tweet location----------------------------------------------------####
 
-los_angeles_bb = "-118.6681759,33.5883113449,-117.5042724609,34.3373061"
+los_angeles = "-118.670883,33.733477,-117.695847,34.290126"
 Santa_Monica = "-118.514757,33.980857,-118.417253,34.065264"
 Dallas = "-96.904907,32.761906,-96.684917,33.080035"
 Midland_Odessa = "-103.1575,31.4849,-101.5178,32.3591"
@@ -34,21 +34,53 @@ SFO = "-122.5319,37.5751,-122.3438,37.824"
 
 import psycopg2 as pg2
 import psycopg2.extras as pgex
-this_host='54.69.228.16'
+this_host='34.211.59.66'
 this_user='postgres'
 this_password='postgres'
 
 
-### -----------------------------------------------------------------------------------####
-### cleaing text ----------------------------------------------------------------------####
+### ------------------------------------------------------------------------------------####
+### cleaning text ----------------------------------------------------------------------####
 
 def cleaner(text):
-    #text = text.lower()
+    text = text.lower()
     text = re.sub("'","''", text)
     text = re.sub("{","\{",text)
     text = re.sub("}","\}",text)
+    text = re.sub('\n',' ',text)
+
     #text = re.sub(":","\:",text)
     return text
+
+### -------------------------------------------------------------------------------------####
+### cleaning tweet ----------------------------------------------------------------------####
+
+#from spacy.en import STOP_WORDS
+#from spacy.en import English
+#import nltk
+#nlp = English()
+def tweet_cleaner(text):
+    text = text.lower()
+    text = re.sub("'","''", text)
+    text = re.sub("{","\{",text)
+    text = re.sub("}","\}",text)
+    text = re.sub(r'http\S+', '',text)
+    text = re.sub(r'@\S+', '',text)
+    
+    text = re.sub('\s+',' ',text)
+    text = re.sub('\n',' ',text) 
+    emoji_pattern = re.compile("["
+        u"\U0001F600-\U0001F64F"  # emoticons
+        u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+        u"\U0001F680-\U0001F6FF"  # transport & map symbols
+        u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                           "]+", flags=re.UNICODE)
+    text = re.sub(emoji_pattern, '', text)    
+#    text = ' '.join([i.lemma_ for i in nlp(text) 
+#                   if i.orth_ not in STOP_WORDS])
+    
+    return text
+
 ### -----------------------------------------------------------------------------------####
 ### Collecting tweets------------------------------------------------------------------####
 
@@ -56,35 +88,47 @@ def cleaner(text):
 
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 twitter_stream = TwitterStream(auth=oauth)
-iterator = twitter_stream.statuses.filter(locations=Santa_Monica+','+\
-                                          Midland_Odessa+','+Dallas+','+\
-                                          Sacramento_east+','+SFO)
+#iterator = twitter_stream.statuses.filter(locations=Santa_Monica+','+\
+#                                          Midland_Odessa+','+Dallas+','+\
+#                                          Sacramento_east+','+SFO)
+iterator = twitter_stream.statuses.filter(locations=los_angeles)
 tweet_count = 300000
 
 conn = pg2.connect(host = this_host, 
                         user = this_user,
                         password = this_password)
 
-#tweets = []
+
 cur = conn.cursor()
 for tweet in iterator:
     tweet_count -= 1  
-    #tweets.append(tweet)
    
-    id_str = str(tweet['id_str'])
-    screen_name = tweet['user']['screen_name']
-    tweet_content = cleaner(tweet['text'])
-    #tweet_content = tweet["text"]
-    #tweet_content = tweet_content.encode('ascii', 'replace')
-    
     try:
-        hashtags = cleaner(tweet['entities']['hashtags']['text'])
+        id_str = str(tweet['id_str'])
+    except:    
+        id_str = None
+    try:
+        screen_name = tweet['user']['screen_name']
     except:
-        hashtags = None
+        screen_name = None
+
+    tweet_content = cleaner(tweet['text'])
+    cleaned_tweet = tweet_cleaner(tweet['text'])
     screen_name = tweet['user']['screen_name']
     retweeted = tweet['retweeted']
     retweet_count = tweet['retweet_count']
     created_at = tweet['created_at']
+    
+        get_hashtags = lambda tweet: " ".join([i for i in tweet.split() if ('#' in i)])
+        hashtags1 = get_hashtags(tweet_content)
+        hashtags1 = re.sub('\W',' ',hashtags)
+        hashtags1 = re.sub('\s+',' ',hashtags)
+        if len(hashtags1) > 1:
+            try: 
+                hashtags = hashtags1
+            except:
+                hashtags = None
+
     
     try:
         location =  cleaner(tweet['place']['full_name'])
@@ -115,10 +159,11 @@ for tweet in iterator:
                             id,
                             screen_name,
                             tweet_content,
+                            cleaned_tweet,
+                            hashtags,
                             created_at,
                             retweeted,
                             retweet_count,
-                            hashtags,
                             location,
                             country,
                             place_type,
@@ -128,14 +173,15 @@ for tweet in iterator:
                             lang
                         )
                     values
-                        ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
+                        ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
                  '''.format(id_str,
                             screen_name,
                             tweet_content,
+                            cleaned_tweet,
+                            hashtags,
                             created_at,
                             retweeted,
                             retweet_count,
-                            hashtags,
                             location,
                             country,
                             place_type,
