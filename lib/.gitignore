@@ -1,0 +1,4 @@
+## this file non-hidden files ending in *key.py
+/*.keys.py
+/twitter_keys.py
+/GDELT_keys.py
