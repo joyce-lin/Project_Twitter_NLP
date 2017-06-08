@@ -149,7 +149,10 @@ for tweet in iterator:
         latitude = 0.0 
         longitude = 0.0  
     usr= tweet['user']
-    lang = tweet['lang']
+    if tweet['lang'] = 'en':
+        lang = tweet['lang']
+    else:
+        pass
     try:
         time_zone = cleaner(tweet['user']['time_zone'])
     except:
