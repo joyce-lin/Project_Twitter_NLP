@@ -106,7 +106,7 @@ for tweet in iterator:
     try:
         id_str = str(tweet['id_str'])
     except:    
-        id_str = None
+        pass
     try:
         screen_name = tweet['user']['screen_name']
     except:
