@@ -194,12 +194,14 @@ for tweet in iterator:
                                )
         print(str(tweet_count)+' '+ screen_name+ ':  '+ tweet_content)
         #print(latitude,longitude)
-        if conn.closed != 0:
-            print('twitting: I am sleeping....')
+        try:
+            cur.execute(sql_insert)
+            
+        except:
             sleep(120)
-        cur.execute(sql_insert)
+            print('twitting: I am sleeping....')
+            cur.execute(sql_insert)
         conn.commit()
-             
         if tweet_count <= 0:
             break
     else:
