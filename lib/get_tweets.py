@@ -123,11 +123,13 @@ for tweet in iterator:
     hashtags1 = get_hashtags(tweet_content)
     hashtags1 = re.sub('\W',' ',hashtags1)
     hashtags1 = re.sub('\s+',' ',hashtags1)
-    if len(hashtags1) > 1:
-        try: 
+    try: 
+        if len(hashtags1) > 1:
             hashtags = hashtags1
-        except:
+        else:
             hashtags = None
+    except:
+        hashtags = None
     try:
         location =  cleaner(tweet['place']['full_name'])
     except:
