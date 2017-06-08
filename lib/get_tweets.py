@@ -198,8 +198,15 @@ for tweet in iterator:
             cur.execute(sql_insert)
             
         except:
+            print('twitter: I am sleeping....')
             sleep(120)
-            print('twitting: I am sleeping....')
+            conn.close()
+            conn = pg2.connect(host = this_host, 
+                        user = this_user,
+                        password = this_password)
+
+
+            cur = conn.cursor()
             cur.execute(sql_insert)
         conn.commit()
         if tweet_count <= 0:
