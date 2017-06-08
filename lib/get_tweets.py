@@ -149,7 +149,7 @@ for tweet in iterator:
         latitude = 0.0 
         longitude = 0.0  
     usr= tweet['user']
-    if tweet['lang'] = 'en':
+    if tweet['lang'] == 'en':
         lang = tweet['lang']
     else:
         pass
