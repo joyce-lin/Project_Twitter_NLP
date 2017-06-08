@@ -5,6 +5,7 @@ import json
 from IPython.display import display
 import re
 import os,sys,inspect
+from time import sleep
 #currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 #parentdir = os.path.dirname(currentdir)
 #sys.path.insert(0,parentdir)
@@ -193,8 +194,11 @@ for tweet in iterator:
                                )
         print(str(tweet_count)+' '+ screen_name+ ':  '+ tweet_content)
         #print(latitude,longitude)
+        if conn.closed != 0:
+            sleep(120)
         cur.execute(sql_insert)
-        conn.commit()    
+        conn.commit()
+             
         if tweet_count <= 0:
             break
     else:
