@@ -118,11 +118,13 @@ for tweet in iterator:
         cleaned_tweet = tweet_cleaner(tweet['text'])
         date = tweet['created_at'][26:30]+'-'+tweet['created_at'][4:7]+'-'+tweet['created_at'][8:10]
         time = tweet['created_at'][11:19]
+        
         screen_name = tweet['user']['screen_name']
         retweeted = tweet['retweeted']
         retweet_count = tweet['retweet_count']
         created_at = tweet['created_at']
-
+        date_time = "to_timestamp(concat(substring({},27,4),'-',substring({},5,3),'-',\
+                substring(created_at,9,2),' ',substring({},11,9)),\'YYYY-Mon-DD HH24:MI:SS') at time zone \'UTC'".format(created_at)
         get_hashtags = lambda tweet: " ".join([i for i in tweet.split() if ('#' in i)])
         hashtags1 = get_hashtags(tweet_content)
         hashtags1 = re.sub('\W',' ',hashtags1)
@@ -168,6 +170,7 @@ for tweet in iterator:
                                 created_at,
                                 date,
                                 time,
+                                date_time,
                                 retweeted,
                                 retweet_count,
                                 location,
@@ -188,6 +191,7 @@ for tweet in iterator:
                                 created_at,
                                 date,
                                 time,
+                                date_time,
                                 retweeted,
                                 retweet_count,
                                 location,
