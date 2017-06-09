@@ -89,10 +89,10 @@ def tweet_cleaner(text):
 
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 twitter_stream = TwitterStream(auth=oauth)
-#iterator = twitter_stream.statuses.filter(locations=Santa_Monica+','+\
-#                                          Midland_Odessa+','+Dallas+','+\
-#                                          Sacramento_east+','+SFO)
-iterator = twitter_stream.statuses.filter(locations=los_angeles)
+iterator = twitter_stream.statuses.filter(locations=Santa_Monica+','+\
+                                          Midland_Odessa+','+Dallas+','+\
+                                          Sacramento_east+','+SFO)
+#iterator = twitter_stream.statuses.filter(locations=los_angeles)
 tweet_count = 300000
 
 conn = pg2.connect(host = this_host, 
