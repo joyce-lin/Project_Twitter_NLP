@@ -116,6 +116,8 @@ for tweet in iterator:
 
         tweet_content = cleaner(tweet['text'])
         cleaned_tweet = tweet_cleaner(tweet['text'])
+        date = tweet['created_at'][26:30]+'-'+tweet['created_at'][4:7]+'-'+tweet['created_at'][8:10]
+        time = tweet['created_at'][11:19]
         screen_name = tweet['user']['screen_name']
         retweeted = tweet['retweeted']
         retweet_count = tweet['retweet_count']
@@ -164,6 +166,8 @@ for tweet in iterator:
                                 cleaned_tweet,
                                 hashtags,
                                 created_at,
+                                date,
+                                time,
                                 retweeted,
                                 retweet_count,
                                 location,
@@ -175,13 +179,15 @@ for tweet in iterator:
                                 lang
                             )
                         values
-                            ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
+                            ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
                      '''.format(id_str,
                                 screen_name,
                                 tweet_content,
                                 cleaned_tweet,
                                 hashtags,
                                 created_at,
+                                date,
+                                time,
                                 retweeted,
                                 retweet_count,
                                 location,
@@ -198,7 +204,7 @@ for tweet in iterator:
             cur.execute(sql_insert)
             
         except:
-            print('twitter: I am sleeping....')
+            print('twitter: I am sleeping.......')
             sleep(120)
             conn.close()
             conn = pg2.connect(host = this_host, 
