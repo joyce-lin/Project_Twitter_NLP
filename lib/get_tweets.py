@@ -151,6 +151,10 @@ for tweet in iterator:
         try:
             latitude = tweet["geo"]["coordinates"][0]
             longitude = tweet["geo"]["coordinates"][1]
+        try:
+            bounding_box_coord = tweet['place']['bounding_box']['coordinates'][0]
+        except:   
+            bounding_box_coord = None
         except:
             latitude = 0.0 
             longitude = 0.0  
@@ -177,12 +181,13 @@ for tweet in iterator:
                                 country,
                                 place_type,
                                 latitude,
-                                longitude, 
+                                longitude,
+                                bounding_box_coord,
                                 time_zone,
                                 lang
                             )
                         values
-                            ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
+                            ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
                      '''.format(id_str,
                                 screen_name,
                                 tweet_content,
@@ -199,6 +204,7 @@ for tweet in iterator:
                                 place_type,
                                 latitude,
                                 longitude,
+                                bounding_box_coord,
                                 time_zone,
                                 lang
                                )
