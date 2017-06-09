@@ -150,14 +150,14 @@ for tweet in iterator:
             place_type = None
         try:
             latitude = tweet["geo"]["coordinates"][0]
-            longitude = tweet["geo"]["coordinates"][1]
-        try:
-            bounding_box_coord = tweet['place']['bounding_box']['coordinates'][0]
-        except:   
-            bounding_box_coord = None
+            longitude = tweet["geo"]["coordinates"][1] 
         except:
             latitude = 0.0 
             longitude = 0.0  
+        try:
+            bounding_box_coord = tweet['place']['bounding_box']['coordinates'][0]
+        except:   
+            bounding_box_coord = None    
         usr = tweet['user']
         lang = tweet['lang']
         try:
