@@ -89,7 +89,7 @@ def tweet_cleaner(text):
 
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 twitter_stream = TwitterStream(auth=oauth)
-iterator = twitter_stream.statuses.filter(locations=Santa_Monica+','+\
+iterator = twitter_stream.statuses.filter(locations=Santa_Monica+','+los_angeles+','\
                                           Midland_Odessa+','+Dallas+','+\
                                           Sacramento_east+','+SFO)
 #iterator = twitter_stream.statuses.filter(locations=los_angeles)
