@@ -124,7 +124,8 @@ for tweet in iterator:
         retweet_count = tweet['retweet_count']
         created_at = tweet['created_at']
         date_time = "to_timestamp(concat(substring({},27,4),'-',substring({},5,3),'-',\
-                substring(created_at,9,2),' ',substring({},11,9)),\'YYYY-Mon-DD HH24:MI:SS') at time zone \'UTC'".format(created_at)
+                substring({},9,2),' ',substring({},11,9)),\'YYYY-Mon-DD HH24:MI:SS') at time zone \'UTC'"\
+                .format(created_at,created_at,created_at,created_at)
         get_hashtags = lambda tweet: " ".join([i for i in tweet.split() if ('#' in i)])
         hashtags1 = get_hashtags(tweet_content)
         hashtags1 = re.sub('\W',' ',hashtags1)
