@@ -123,9 +123,8 @@ for tweet in iterator:
         retweeted = tweet['retweeted']
         retweet_count = tweet['retweet_count']
         created_at = tweet['created_at']
-        date_time = "to_timestamp(concat(substring({},27,4),'-',substring({},5,3),'-',\
-                substring({},9,2),' ',substring({},11,9)),\'YYYY-Mon-DD HH24:MI:SS') at time zone \'UTC'"\
-                .format(created_at,created_at,created_at,created_at)
+        date_time = tweet['created_at'][26:30]+'-'+\
+                    tweet['created_at'][4:7]+'-'+tweet['created_at'][8:10]+' '+tweet['created_at'][11:19]
         get_hashtags = lambda tweet: " ".join([i for i in tweet.split() if ('#' in i)])
         hashtags1 = get_hashtags(tweet_content)
         hashtags1 = re.sub('\W',' ',hashtags1)
@@ -183,7 +182,7 @@ for tweet in iterator:
                                 lang
                             )
                         values
-                            ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
+                            ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
                      '''.format(id_str,
                                 screen_name,
                                 tweet_content,
