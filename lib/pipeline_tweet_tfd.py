@@ -17,7 +17,7 @@ conn = pg2.connect(host = this_host,
 
 
 sql_select = '''select cleaned_tweet 
-                from tweets where (date_time >= NOW() - '1 day'::INTERVAL) ;'''
+                from tweets where (date_time >= NOW() - '7 day'::INTERVAL) ;'''
 cur = conn.cursor(cursor_factory=pgex.RealDictCursor)
 cur.execute(sql_select)
 rows = cur.fetchall()
