@@ -1,0 +1,3 @@
+key = {
+'API_KEY': 'AIzaSyCatNdLuy59U04OUR0lJJd85O1Y1U6fIwE'
+}
