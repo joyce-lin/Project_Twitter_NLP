@@ -5,15 +5,16 @@ import json
 from IPython.display import display
 import re
 from time import sleep
-#import os,sys,inspect
-#currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-#parentdir = os.path.dirname(currentdir)
+import os,sys,inspect
+cdcurrentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
 #sys.path.insert(0,parentdir)
 from conn_postgres import connect_to_postgres as conpg
 from twitter_key import key
 import json
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 
+print(parentdir)
 
 CONSUMER_KEY = key['CONSUMER_KEY']
 CONSUMER_SECRET = key['CONSUMER_SECRET']
