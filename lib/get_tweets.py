@@ -15,10 +15,10 @@ import json
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 
 
-CONSUMER_KEY = keys['CONSUMER_KEY']
-CONSUMER_SECRET = keys['CONSUMER_SECRET']
-ACCESS_TOKEN = keys['ACCESS_TOKEN']
-ACCESS_SECRET = keys['ACCESS_SECRET']
+CONSUMER_KEY = key['CONSUMER_KEY']
+CONSUMER_SECRET = key['CONSUMER_SECRET']
+ACCESS_TOKEN = key['ACCESS_TOKEN']
+ACCESS_SECRET = key['ACCESS_SECRET']
 
 ### -----------------------------------------------------------------------------------####
 ### geo bounding for tweet location----------------------------------------------------####
