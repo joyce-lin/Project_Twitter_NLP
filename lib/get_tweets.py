@@ -29,6 +29,8 @@ SFO = "-122.5319,37.5751,-122.3438,37.824"
 
 ### -----------------------------------------------------------------------------------####
 ### connect to postgres----------------------------------------------------------------####
+import psycopg2 as pg2
+import psycopg2.extras as pgex
 from postgres_conn import postgres
 ip= postgres['host']
 usr= postgres['user']
