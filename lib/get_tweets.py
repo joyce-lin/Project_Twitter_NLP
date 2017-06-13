@@ -5,12 +5,12 @@ import json
 from IPython.display import display
 import re
 from time import sleep
-import os,sys,inspect
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0,parentdir)
-from lib.conn_postgres import connect_to_postgres as conpg
-from lib.twitter_keys import keys
+#import os,sys,inspect
+#currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+#parentdir = os.path.dirname(currentdir)
+#sys.path.insert(0,parentdir)
+from conn_postgres import connect_to_postgres as conpg
+from twitter_keys import keys
 import json
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 
@@ -29,11 +29,6 @@ Dallas = "-96.904907,32.761906,-96.684917,33.080035"
 Midland_Odessa = "-103.1575,31.4849,-101.5178,32.3591"
 Sacramento_east = "-121.8658,38.445,-120.2618,39.3598"
 SFO = "-122.5319,37.5751,-122.3438,37.824"
-
-### -----------------------------------------------------------------------------------####
-### connect to postgres----------------------------------------------------------------####
-
-
 
 
 ### ------------------------------------------------------------------------------------####
@@ -80,9 +75,6 @@ def tweet_cleaner(text):
 
 ### -----------------------------------------------------------------------------------####
 ### Collecting tweets------------------------------------------------------------------####
-
-
-
 oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 twitter_stream = TwitterStream(auth=oauth)
 iterator = twitter_stream.statuses.filter(locations=Santa_Monica+','+los_angeles+','+\
@@ -93,7 +85,6 @@ tweet_count = 300000
 ### -----------------------------------------------------------------------------------####
 ### get_tweets-------------------------------------------------------------------------####
 
-conn, cur = conpg(location = 'postgres')
 for tweet in iterator:
     try:
         if tweet['lang'] == 'en':   
@@ -206,8 +197,8 @@ for tweet in iterator:
             #print(latitude,longitude)
 
             try:
+                conn, cur = conpg(location = 'postgres')
                 cur.execute(sql_insert)
-
             except:
                 print('twitter: I am sleeping.......')
                 sleep(120)
@@ -215,8 +206,6 @@ for tweet in iterator:
                 conn = pg2.connect(host = this_host, 
                             user = this_user,
                             password = this_password)
-
-
                 cur = conn.cursor()
                 cur.execute(sql_insert)
             conn.commit()
