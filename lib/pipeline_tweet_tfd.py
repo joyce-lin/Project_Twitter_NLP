@@ -3,17 +3,17 @@ import numpy as np
 from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.pipeline import Pipeline
-import psycopg2 as pg2
-import psycopg2.extras as pgex
+
 import pickle
 import redis
 
-this_host='34.211.59.66'
-this_user='postgres'
-this_password='postgres'
-conn = pg2.connect(host = this_host, 
-                        user = this_user,
-                        password = this_password)
+import psycopg2 as pg2
+import psycopg2.extras as pgex
+from DataConnection import postgres, redis
+ip= postgres['host']
+usr= postgres['user']
+pw= postgres['pw']
+conn = pg2.connect(host = ip,user = usr,password = pw)
 
 
 sql_select = '''select cleaned_tweet 
@@ -25,7 +25,7 @@ conn.close()
 df = pd.DataFrame(rows)
 df.reset_index(inplace = True)
 
-redis_ip = '34.211.59.66'
+redis_ip = redis['host']
 r = redis.StrictRedis(redis_ip)
 
 tfd_svd_pipe = Pipeline([

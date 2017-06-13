@@ -4,13 +4,13 @@ import pandas as pd
 import json
 from IPython.display import display
 import re
-import os,sys,inspect
 from time import sleep
-#currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-#parentdir = os.path.dirname(currentdir)
-#sys.path.insert(0,parentdir)
-
-from twitter_keys import keys
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir)
+from lib.conn_postgres import connect_to_postgres as conpg
+from lib.twitter_keys import keys
 import json
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 
@@ -33,12 +33,7 @@ SFO = "-122.5319,37.5751,-122.3438,37.824"
 ### -----------------------------------------------------------------------------------####
 ### connect to postgres----------------------------------------------------------------####
 
-import psycopg2 as pg2
-import psycopg2.extras as pgex
-from DataConnection import postgres
-ip= postgres['host']
-usr= postgres['user']
-pw= postgres['pw']
+
 
 
 ### ------------------------------------------------------------------------------------####
@@ -97,8 +92,8 @@ iterator = twitter_stream.statuses.filter(locations=Santa_Monica+','+los_angeles
 tweet_count = 300000
 ### -----------------------------------------------------------------------------------####
 ### get_tweets-------------------------------------------------------------------------####
-conn = pg2.connect(host = ip,user = usr,password = pw)
-cur = conn.cursor()
+
+conn, cur = conpg(location = 'postgres')
 for tweet in iterator:
     try:
         if tweet['lang'] == 'en':   
