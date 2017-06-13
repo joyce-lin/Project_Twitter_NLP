@@ -9,8 +9,13 @@ curfilePath = os.path.abspath(__file__)
 curDir = os.path.abspath(os.path.join(curfilePath,os.pardir)) # this will return current directory in which python file resides.
 parentDir = os.path.abspath(os.path.join(curDir,os.pardir)) # this will return parent directory.
 
-file = parentDir+'/lib/credential_keys.yml'
 
+file = parentDir+'/lib/credential_keys.yml'
+try:
+    open(file, 'r')
+except:
+    file = 'home/jovyan/work/DSI/capstone/lib/credential_keys.yml
+        
 def connect_to_postgres (location = 'postgres'):
     """ v 1.2 Open a psycopg2 connection and create a cursor based on a yaml credential file.
         The current expected name of the yaml file is "Database_credentials"; please customize this to your taste.
