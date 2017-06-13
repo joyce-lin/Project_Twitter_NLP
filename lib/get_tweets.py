@@ -10,7 +10,7 @@ from time import sleep
 #parentdir = os.path.dirname(currentdir)
 #sys.path.insert(0,parentdir)
 from conn_postgres import connect_to_postgres as conpg
-from twitter_kes import key
+from twitter_key import key
 import json
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 
