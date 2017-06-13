@@ -196,18 +196,18 @@ for tweet in iterator:
             print(str(tweet_count)+' '+ screen_name+ ':  '+ tweet_content)
             #print(latitude,longitude)
 
-            try:
-                conn, cur = conpg(location = 'postgres')
-                cur.execute(sql_insert)
-            except:
-                print('twitter: I am sleeping.......')
-                sleep(120)
-                conn.close()
-                conn = pg2.connect(host = this_host, 
-                            user = this_user,
-                            password = this_password)
-                cur = conn.cursor()
-                cur.execute(sql_insert)
+            #try:
+            conn, cur = conpg(location = 'postgres')
+            cur.execute(sql_insert)
+            #except:
+            #    print('twitter: I am sleeping.......')
+            #    sleep(120)
+            #    conn.close()
+            #    conn = pg2.connect(host = this_host, 
+            #                user = this_user,
+            #                password = this_password)
+            #    cur = conn.cursor()
+            #    cur.execute(sql_insert)
             conn.commit()
             if tweet_count <= 0:
                 break
