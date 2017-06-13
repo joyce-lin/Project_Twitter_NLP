@@ -14,7 +14,7 @@ file = parentDir+'/lib/credential_keys.yml'
 try:
     open(file, 'r')
 except:
-    file = 'home/jovyan/work/DSI/capstone/lib/credential_keys.yml
+    file = 'home/jovyan/work/DSI/capstone/lib/credential_keys.yml'
         
 def connect_to_postgres (location = 'postgres'):
     """ v 1.2 Open a psycopg2 connection and create a cursor based on a yaml credential file.
