@@ -86,130 +86,130 @@ tweet_count = 300000
 ### get_tweets-------------------------------------------------------------------------####
 
 for tweet in iterator:
-    try:
-        if tweet['lang'] == 'en':   
-            tweet_count -= 1  
-            
-            try:
-                id_str = str(tweet['id_str'])
-            except:    
-                pass
-            try:
-                screen_name = tweet['user']['screen_name']
-            except:
-                screen_name = None
+    #try:
+    if tweet['lang'] == 'en':   
+        tweet_count -= 1  
 
-            tweet_content = cleaner(tweet['text'])
-            cleaned_tweet = tweet_cleaner(tweet['text'])
-            date = tweet['created_at'][26:30]+'-'+tweet['created_at'][4:7]+'-'+tweet['created_at'][8:10]
-            time = tweet['created_at'][11:19]
-
-            screen_name = tweet['user']['screen_name']
-            retweeted = tweet['retweeted']
-            retweet_count = tweet['retweet_count']
-            created_at = tweet['created_at']
-            date_time = tweet['created_at'][26:30]+'-'+\
-                        tweet['created_at'][4:7]+'-'+tweet['created_at'][8:10]+' '+tweet['created_at'][11:19]
-            get_hashtags = lambda tweet: " ".join([i for i in tweet.split() if ('#' in i)])
-            hashtags1 = get_hashtags(tweet_content)
-            hashtags1 = re.sub('\W',' ',hashtags1)
-            hashtags1 = re.sub('\s+',' ',hashtags1)
-            try: 
-                if len(hashtags1) > 1:
-                    hashtags = hashtags1
-                else:
-                    hashtags = None
-            except:
-                hashtags = None
-            try:
-                location =  cleaner(tweet['place']['full_name'])
-            except:
-                location = None
-            try:
-                country = tweet['place']['country']
-            except:
-                country = None
-            try:
-                place_type = tweet['place']['place_type']
-            except:
-                place_type = None
-            try:
-                latitude = tweet["geo"]["coordinates"][0]
-                longitude = tweet["geo"]["coordinates"][1] 
-            except:
-                latitude = 0.0 
-                longitude = 0.0  
-            try:
-                bounding_box_coord = tweet['place']['bounding_box']['coordinates'][0]
-            except:   
-                bounding_box_coord = None    
-            usr = tweet['user']
-            lang = tweet['lang']
-            try:
-                time_zone = cleaner(tweet['user']['time_zone'])
-            except:
-                time_zone = None    
-            sql_insert = '''insert into tweets 
-                                (
-                                    id,
-                                    screen_name,
-                                    tweet_content,
-                                    cleaned_tweet,
-                                    hashtags,
-                                    created_at,
-                                    date,
-                                    time,
-                                    date_time,
-                                    retweeted,
-                                    retweet_count,
-                                    location,
-                                    country,
-                                    place_type,
-                                    latitude,
-                                    longitude,
-                                    bounding_box_coord,
-                                    time_zone,
-                                    lang
-                                )
-                            values
-                                ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
-                         '''.format(id_str,
-                                    screen_name,
-                                    tweet_content,
-                                    cleaned_tweet,
-                                    hashtags,
-                                    created_at,
-                                    date,
-                                    time,
-                                    date_time,
-                                    retweeted,
-                                    retweet_count,
-                                    location,
-                                    country,
-                                    place_type,
-                                    latitude,
-                                    longitude,
-                                    bounding_box_coord,
-                                    time_zone,
-                                    lang
-                                   )
-            print(str(tweet_count)+' '+ screen_name+ ':  '+ tweet_content)
-
-            #try:
-            conn, cur = conpg(location = 'postgres')
-            cur.execute(sql_insert)
-            #except:
-            #    print('twitter: I am sleeping.......')
-            #    sleep(120)
-            #    conn.close()
-            #    conn, cur = conpg(location = 'postgres')
-            #    cur.execute(sql_insert)
-            conn.commit()
-            print('tweet committed')
-            if tweet_count <= 0:
-                break
-        else:
+        try:
+            id_str = str(tweet['id_str'])
+        except:    
             pass
-    except:
+        try:
+            screen_name = tweet['user']['screen_name']
+        except:
+            screen_name = None
+
+        tweet_content = cleaner(tweet['text'])
+        cleaned_tweet = tweet_cleaner(tweet['text'])
+        date = tweet['created_at'][26:30]+'-'+tweet['created_at'][4:7]+'-'+tweet['created_at'][8:10]
+        time = tweet['created_at'][11:19]
+
+        screen_name = tweet['user']['screen_name']
+        retweeted = tweet['retweeted']
+        retweet_count = tweet['retweet_count']
+        created_at = tweet['created_at']
+        date_time = tweet['created_at'][26:30]+'-'+\
+                    tweet['created_at'][4:7]+'-'+tweet['created_at'][8:10]+' '+tweet['created_at'][11:19]
+        get_hashtags = lambda tweet: " ".join([i for i in tweet.split() if ('#' in i)])
+        hashtags1 = get_hashtags(tweet_content)
+        hashtags1 = re.sub('\W',' ',hashtags1)
+        hashtags1 = re.sub('\s+',' ',hashtags1)
+        try: 
+            if len(hashtags1) > 1:
+                hashtags = hashtags1
+            else:
+                hashtags = None
+        except:
+            hashtags = None
+        try:
+            location =  cleaner(tweet['place']['full_name'])
+        except:
+            location = None
+        try:
+            country = tweet['place']['country']
+        except:
+            country = None
+        try:
+            place_type = tweet['place']['place_type']
+        except:
+            place_type = None
+        try:
+            latitude = tweet["geo"]["coordinates"][0]
+            longitude = tweet["geo"]["coordinates"][1] 
+        except:
+            latitude = 0.0 
+            longitude = 0.0  
+        try:
+            bounding_box_coord = tweet['place']['bounding_box']['coordinates'][0]
+        except:   
+            bounding_box_coord = None    
+        usr = tweet['user']
+        lang = tweet['lang']
+        try:
+            time_zone = cleaner(tweet['user']['time_zone'])
+        except:
+            time_zone = None    
+        sql_insert = '''insert into tweets 
+                            (
+                                id,
+                                screen_name,
+                                tweet_content,
+                                cleaned_tweet,
+                                hashtags,
+                                created_at,
+                                date,
+                                time,
+                                date_time,
+                                retweeted,
+                                retweet_count,
+                                location,
+                                country,
+                                place_type,
+                                latitude,
+                                longitude,
+                                bounding_box_coord,
+                                time_zone,
+                                lang
+                            )
+                        values
+                            ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
+                     '''.format(id_str,
+                                screen_name,
+                                tweet_content,
+                                cleaned_tweet,
+                                hashtags,
+                                created_at,
+                                date,
+                                time,
+                                date_time,
+                                retweeted,
+                                retweet_count,
+                                location,
+                                country,
+                                place_type,
+                                latitude,
+                                longitude,
+                                bounding_box_coord,
+                                time_zone,
+                                lang
+                               )
+        print(str(tweet_count)+' '+ screen_name+ ':  '+ tweet_content)
+
+        #try:
+        conn, cur = conpg(location = 'postgres')
+        cur.execute(sql_insert)
+        #except:
+        #    print('twitter: I am sleeping.......')
+        #    sleep(120)
+        #    conn.close()
+        #    conn, cur = conpg(location = 'postgres')
+        #    cur.execute(sql_insert)
+        conn.commit()
+        print('tweet committed')
+        if tweet_count <= 0:
+            break
+    else:
         pass
+    #except:
+    #    pass
 conn.close()
