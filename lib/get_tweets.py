@@ -89,7 +89,7 @@ for tweet in iterator:
     try:
         if tweet['lang'] == 'en':   
             tweet_count -= 1  
-
+            
             try:
                 id_str = str(tweet['id_str'])
             except:    
@@ -194,18 +194,18 @@ for tweet in iterator:
                                     lang
                                    )
             print(str(tweet_count)+' '+ screen_name+ ':  '+ tweet_content)
-            #print(latitude,longitude)
 
-            try:
-                conn, cur = conpg(location = 'postgres')
-                cur.execute(sql_insert)
-            except:
-                print('twitter: I am sleeping.......')
-                sleep(120)
-                conn.close()
-                conn, cur = conpg(location = 'postgres')
-                cur.execute(sql_insert)
+            #try:
+            conn, cur = conpg(location = 'postgres')
+            cur.execute(sql_insert)
+            #except:
+            #    print('twitter: I am sleeping.......')
+            #    sleep(120)
+            #    conn.close()
+            #    conn, cur = conpg(location = 'postgres')
+            #    cur.execute(sql_insert)
             conn.commit()
+            print('tweet committed')
             if tweet_count <= 0:
                 break
         else:
