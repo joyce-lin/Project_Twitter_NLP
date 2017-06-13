@@ -6,7 +6,7 @@ from IPython.display import display
 import re
 from time import sleep
 import os,sys,inspect
-cdcurrentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 #sys.path.insert(0,parentdir)
 from conn_postgres import connect_to_postgres as conpg
