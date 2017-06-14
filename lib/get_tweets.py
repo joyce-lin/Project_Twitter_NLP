@@ -201,7 +201,8 @@ for tweet in iterator:
             try:
                 cur.execute(sql_insert)
 
-            except:
+            except Exception as e: 
+                print(e)
                 print('twitter: I am sleeping.......')
                 sleep(120)
                 conn.close()
