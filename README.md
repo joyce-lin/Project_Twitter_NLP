@@ -17,14 +17,14 @@ To test my framework:
   3. Event and Trend Detection using Cosine Similarity and ARIMA modeling
 
 #### Technologies used in the project
-####  1. Python
-####  2. TwitterStream API
+ 1. Python
+ 2. TwitterStream API
 ####   Data Management
-####   1. postgres
-####   2. redis
+  1. postgres
+  2. redis
 ####   Modeling
-####   1. NLP (LSA): SAPCY | TFIDF |SVD | Count Vectorizer 
-####   2. Cosine Similarity
-####   3. ARIMA Modeling
+  1. NLP (LSA): SAPCY | TFIDF |SVD | Count Vectorizer 
+  2. Cosine Similarity
+  3. ARIMA Modeling
   
 For a more detailed description of this project see /doc/Twitter_capstone_GA_Profile.pdf
