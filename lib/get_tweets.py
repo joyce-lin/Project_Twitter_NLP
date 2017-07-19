@@ -206,7 +206,7 @@ for tweet in iterator:
                 print('twitter: I am sleeping.......')
                 sleep(120)
                 conn.close()
-                conn = conn = pg2.connect(host = ip,user = usr,password = pw)
+                conn = pg2.connect(host = ip,user = usr,password = pw)
                 cur = conn.cursor()
                 cur.execute(sql_insert)
             conn.commit()
