@@ -22,7 +22,7 @@ To test my framework:
   3. Event and Trend Detection using Cosine Similarity and ARIMA modeling
             
             Event extracting using TFIDF and SVD
-              /ipynb/03_Tweets_Modeling_CosineSim_AB_Test_SVD.ipynb
+              /ipynb/03_Tweets_Modeling_CosineSim_AB_Test_SVD.ipynb
             
             Hashtag Time Series Modeling 
               /ipynb/05_Hashtags_Modeling_WhatsTrending.ipynb
