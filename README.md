@@ -1,5 +1,4 @@
-### Project_Twitter_NLP
-Building Event Extraction and Trending Framework for Twitter
+## Building Event Extraction and Trending Framework for Twitter
 
 
 This is my capstone project for the Data Science Immersive at General Assembly. 
