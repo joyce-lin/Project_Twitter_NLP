@@ -38,4 +38,4 @@ To test my framework:
   2. Cosine Similarity
   3. ARIMA Modeling
   
-For a more detailed description of this project see /doc/Twitter_capstone_GA_Profile.pdf
+#### For a more detailed description of this project see /doc/Twitter_capstone_GA_Profile.pdf
