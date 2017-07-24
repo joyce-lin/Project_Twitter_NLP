@@ -13,9 +13,15 @@ In this project, my goals are:
 
 To test my framework:
   1. I collected and cleaned over 1.5 million tweets from uing TwitterStream API
+        --> /lib/get_tweets.py
   2. Create scheduled and on demand LSA processing for text vectrozation
+        --> /ipynb/01_Fit_pipeline_TfiDf_SVD.ipynb
   3. Event and Trend Detection using Cosine Similarity and ARIMA modeling
-
+        Event extracting using TFIDF and SVD
+            /ipynb/03_Tweets_Modeling_CosineSim_AB_Test_SVD.ipynb
+         Hashtag Time Series Modeling 
+            /ipynb/05_Hashtags_Modeling_WhatsTrending.ipynb
+        
 #### Technologies used in the project
  1. Python
  2. TwitterStream API
